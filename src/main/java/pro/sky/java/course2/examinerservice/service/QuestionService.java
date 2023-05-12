@@ -24,4 +24,6 @@ public interface QuestionService {
      * @return randomly chosen question.
      */
     Question getRandomQuestion();
+
+    int count();
 }

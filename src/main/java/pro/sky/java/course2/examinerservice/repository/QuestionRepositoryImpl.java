@@ -3,63 +3,63 @@ package pro.sky.java.course2.examinerservice.repository;
 import development.QuestionUtils;
 import org.springframework.stereotype.Repository;
 import pro.sky.java.course2.examinerservice.domain.Question;
+import pro.sky.java.course2.examinerservice.exception.NoSuchQuestionException;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 
 @Repository
 public class QuestionRepositoryImpl implements QuestionRepository {
 
-    private ArrayList<Question> questions;
+    private HashMap<String, Question> questions;
 
-    private QuestionRepositoryImpl() {}
+    public QuestionRepositoryImpl() {}
 
     @PostConstruct
     private void init() {
-        questions = new ArrayList<>(QuestionUtils.initQuestions());
+        questions = new HashMap<>(QuestionUtils.initQuestions());
     }
 
 
     @Override
     public Question add(Question question) {
         if(questions == null) {
-            questions = new ArrayList<>();
+            questions = new HashMap<>();
         }
-        if (questions.contains(question)) {
-            throw new RuntimeException(); //throw new QuestionAlreadyAddedException(question);
-        }
-        questions.add(question);
+        questions.put(question.getQuestion(), question);
         return question;
     }
 
     @Override
     public Question remove(Question question) {
-        if (!questions.contains(question)) {
-            throw new RuntimeException();
+
+        String  strQuestion = question.getQuestion();
+        if (!questions.containsKey(strQuestion)) {
+            throw new NoSuchQuestionException(strQuestion);
         }
-        questions.remove(question);
-        return question;
+        return questions.remove(strQuestion);
     }
 
     @Override
     public Question get(Question question) {
-        if (!questions.contains(question)) {
-            throw new RuntimeException();
+        String  strQuestion = question.getQuestion();
+        if (!questions.containsKey(strQuestion)) {
+            throw new NoSuchQuestionException(strQuestion);
         }
-        return question;
+        return questions.get(strQuestion);
     }
 
     @Override
     public Question get(int index) {
-       return questions.get(index);
+       return (Question)(questions.values().toArray()[index]);
     }
 
     @Override
     public Collection<Question> getAll() {
-        return List.copyOf(questions);
+        return List.copyOf(questions.values());
     }
 
     @Override

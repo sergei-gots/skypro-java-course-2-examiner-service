@@ -52,4 +52,9 @@ public class JavaQuestionServiceImpl implements QuestionService {
 
         return questionRepository.get(random.nextInt(questionRepository.count()));
     }
+
+    @Override
+    public int count() {
+        return questionRepository.count();
+    }
 }

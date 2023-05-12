@@ -9,6 +9,13 @@ GET http://localhost:8080/exam/get/2
 ###
 GET http://localhost:8080/exam/get/3
 
+###
+GET http://localhost:8080/exam/get/10
+###
+GET http://localhost:8080/exam/get/12
+###
+GET http://localhost:8080/exam/get/13
+
 
 
 ###

@@ -2,44 +2,47 @@ package development;
 
 import pro.sky.java.course2.examinerservice.domain.Question;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class QuestionUtils {
 
-    public static List<Question> initQuestions() {
+    public static Map<String, Question> initQuestions() {
 
-        List<Question> questions = List.of(
-            new Question("How do you reverse a string in Java?",
-                    "public class StringPrograms {\n" +
-                            "\n" +
-                            "\tpublic static void main(String[] args) {\n" +
-                            "\t\tString str = \"123\";\n" +
-                            "\n" +
-                            "\t\tSystem.out.println(reverse(str));\n" +
-                            "\t}\n" +
-                            "\n" +
-                            "\tpublic static String reverse(String in) {\n" +
-                            "\t\tif (in == null)\n" +
-                            "\t\t\tthrow new IllegalArgumentException(\"Null is not valid input\");\n" +
-                            "\n" +
-                            "\t\tStringBuilder out = new StringBuilder();\n" +
-                            "\n" +
-                            "\t\tchar[] chars = in.toCharArray();\n" +
-                            "\n" +
-                            "\t\tfor (int i = chars.length - 1; i >= 0; i--)\n" +
-                            "\t\t\tout.append(chars[i]);\n" +
-                            "\n" +
-                            "\t\treturn out.toString();\n" +
-                            "\t}\n" +
-                            "\n" +
-                            "}"),
-            new Question("How do you swap two numbers without using a third variable in Java?",
-                    "b = b + a; // now b is sum of both the numbers\n" +
-                            "a = b - a; // b - a = (b + a) - a = b (a is swapped)\n" +
-                            "b = b - a; // (b + a) - b = a (b is swapped)"),
-            new Question("Write a Java program to check if a vowel is present in a string.",
+        String stringQuestion;
+        return Map.of(
+                stringQuestion = "How do you reverse a string in Java?",
+                new Question(stringQuestion,
+                        "public class StringPrograms {\n" +
+                                "\n" +
+                                "\tpublic static void main(String[] args) {\n" +
+                                "\t\tString str = \"123\";\n" +
+                                "\n" +
+                                "\t\tSystem.out.println(reverse(str));\n" +
+                                "\t}\n" +
+                                "\n" +
+                                "\tpublic static String reverse(String in) {\n" +
+                                "\t\tif (in == null)\n" +
+                                "\t\t\tthrow new IllegalArgumentException(\"Null is not valid input\");\n" +
+                                "\n" +
+                                "\t\tStringBuilder out = new StringBuilder();\n" +
+                                "\n" +
+                                "\t\tchar[] chars = in.toCharArray();\n" +
+                                "\n" +
+                                "\t\tfor (int i = chars.length - 1; i >= 0; i--)\n" +
+                                "\t\t\tout.append(chars[i]);\n" +
+                                "\n" +
+                                "\t\treturn out.toString();\n" +
+                                "\t}\n" +
+                                "\n" +
+                                "}"),
+
+                stringQuestion = "How do you swap two numbers without using a third variable in Java?",
+                new Question(stringQuestion,
+                        "b = b + a; // now b is sum of both the numbers\n" +
+                                "a = b - a; // b - a = (b + a) - a = b (a is swapped)\n" +
+                                "b = b - a; // (b + a) - b = a (b is swapped)"),
+                stringQuestion = "Write a Java program to check if a vowel is present in a string.",
+                new Question(stringQuestion,
                         "public class StringContainsVowels {\n" +
                                 "\n" +
                                 "\tpublic static void main(String[] args) {\n" +
@@ -52,7 +55,8 @@ public class QuestionUtils {
                                 "\t}\n" +
                                 "\n" +
                                 "}"),
-            new Question("Write a Java program to check if the given number is a prime number.",
+                stringQuestion = "Write a Java program to check if the given number is a prime number.",
+                new Question(stringQuestion,
                         "public class PrimeNumberCheck {\n" +
                                 "\n" +
                                 "\tpublic static void main(String[] args) {\n" +
@@ -77,7 +81,8 @@ public class QuestionUtils {
                                 "\t}\n" +
                                 "\n" +
                                 "}"),
-                new Question("Write a Java program to print a Fibonacci sequence using recursion.",
+                stringQuestion = "Write a Java program to print a Fibonacci sequence using recursion.",
+                new Question(stringQuestion,
                         "public class PrintFibonacci {\n" +
                                 "\n" +
                                 "\tpublic static void printFibonacciSequence(int count) {\n" +
@@ -99,7 +104,8 @@ public class QuestionUtils {
                                 "\t}\n" +
                                 "\n" +
                                 "}"),
-                new Question("How do you check if a list of integers contains only odd numbers in Java?",
+                stringQuestion = "How do you check if a list of integers contains only odd numbers in Java?",
+                new Question(stringQuestion,
                         "public static boolean onlyOddNumbers(List<Integer> list) {\n" +
                                 "\tfor (int i : list) {\n" +
                                 "\t\tif (i % 2 == 0)\n" +
@@ -108,7 +114,8 @@ public class QuestionUtils {
                                 "\n" +
                                 "\treturn true;\n" +
                                 "}"),
-                new Question("How do you check whether a string is a palindrome in Java?\n",
+                stringQuestion = "How do you check whether a string is a palindrome in Java?",
+                new Question(stringQuestion,
                         "boolean checkPalindromeString(String input) {\n" +
                                 "\tboolean result = true;\n" +
                                 "\tint length = input.length();\n" +
@@ -122,7 +129,8 @@ public class QuestionUtils {
                                 "\n" +
                                 "\treturn result;\n" +
                                 "}"),
-                new Question("How do you remove spaces from a string in Java?",
+                stringQuestion = "How do you remove spaces from a string in Java?",
+                new Question(stringQuestion,
                         "String removeWhiteSpaces(String input) {\n" +
                                 "\tStringBuilder output = new StringBuilder();\n" +
                                 "\t\n" +
@@ -135,17 +143,18 @@ public class QuestionUtils {
                                 "\t\n" +
                                 "\treturn output.toString();\n" +
                                 "}"),
-                new Question("How do you remove leading and trailing spaces from a string in Java?",
+                stringQuestion = "How do you remove leading and trailing spaces from a string in Java?",
+                new Question(stringQuestion,
                         "String s = \"  abc  def\\t\";\n" +
                                 "\t\t\n" +
                                 "s = s.strip();\n" +
                                 "\t\t\n" +
                                 "System.out.println(s);"),
-                new Question("How do you sort an array in Java?",
+                stringQuestion = "How do you sort an array in Java?",
+                new Question(stringQuestion,
                         "Arrays.sort(array);")
 
 
         );
-        return questions;
     }
 }
