@@ -1,10 +1,10 @@
 package pro.sky.java.course2.examinerservice.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import pro.sky.java.course2.examinerservice.domain.Question;
+import pro.sky.java.course2.examinerservice.exception.AmountIsGreaterThanTotalQuestionsCountException;
+import pro.sky.java.course2.examinerservice.exception.QuestionException;
 import pro.sky.java.course2.examinerservice.service.ExaminerService;
 
 import java.util.Collection;
@@ -21,5 +21,10 @@ public class ExamController {
     @GetMapping("/{amount}")
     public Collection<Question> getRandomCollectionOfQuestions(@PathVariable("amount") Integer amount) {
         return examinerService.getQuestions(amount);
+    }
+
+    @ExceptionHandler(value = AmountIsGreaterThanTotalQuestionsCountException.class)
+    public ResponseEntity<String> handleBadRequest(QuestionException e) {
+        return e.getResponseStatus();
     }
 }

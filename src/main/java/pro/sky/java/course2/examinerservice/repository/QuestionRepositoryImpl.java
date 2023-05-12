@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import pro.sky.java.course2.examinerservice.domain.Question;
 import pro.sky.java.course2.examinerservice.exception.NoSuchQuestionException;
 
-import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +15,9 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
     private HashMap<String, Question> questions;
 
-    public QuestionRepositoryImpl() {}
+    public QuestionRepositoryImpl() { init(); }
 
-    @PostConstruct
+    //@PostConstruct
     private void init() {
         questions = new HashMap<>(QuestionUtils.initQuestions());
     }

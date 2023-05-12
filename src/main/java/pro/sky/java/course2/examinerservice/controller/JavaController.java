@@ -1,9 +1,13 @@
 package pro.sky.java.course2.examinerservice.controller;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.java.course2.examinerservice.domain.Question;
+import pro.sky.java.course2.examinerservice.exception.NoSuchQuestionException;
+import pro.sky.java.course2.examinerservice.exception.QuestionException;
 import pro.sky.java.course2.examinerservice.service.QuestionService;
 
 import java.util.Collection;
@@ -29,7 +33,12 @@ public class JavaController {
     }
 
     @GetMapping("/remove")
-    Question removeQuestion(String question, String answer) {
-        return questionService.remove(new Question(question, answer));
+    Question removeQuestion(String question) {
+        return questionService.remove(new Question(question, null));
+    }
+
+    @ExceptionHandler(value = NoSuchQuestionException.class)
+    public ResponseEntity<String> handleBadRequest(QuestionException e) {
+        return e.getResponseStatus();
     }
 }

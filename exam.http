@@ -22,10 +22,10 @@ GET http://localhost:8080/exam/get/13
 GET http://localhost:8080/exam/java/add?question=What is a maximal size of bucket list within HashSet before it will be transformed to a tree?&answer=8;
 
 ###
-GET http://localhost:8080/exam/java/add?question=What is Integer.MAX_VALUE equal to?&answer=2147483647;
+GET http://localhost:8080/exam/java/add?question=What is Integer.MAX_VALUE equal to?&answer=2147483647
 
 ###
 GET http://localhost:8080/exam/java
 
 ###
-GET http://localhost:8080/exam/java/remove?question=What is Integer.MAX_VALUE equal to?&answer=2147483647;
+GET http://localhost:8080/exam/java/remove?question=What is Integer.MAX_VALUE equal to?
