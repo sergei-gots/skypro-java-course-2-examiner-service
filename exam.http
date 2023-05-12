@@ -1,0 +1,24 @@
+
+### Questions source
+https://www.digitalocean.com/community/tutorials/java-programming-interview-questions#5-write-a-java-program-to-print-a-fibonacci-sequence-using-recursion
+
+###
+GET http://localhost:8080/exam/get/1
+###
+GET http://localhost:8080/exam/get/2
+###
+GET http://localhost:8080/exam/get/3
+
+
+
+###
+GET http://localhost:8080/exam/java/add?question=What is a maximal size of bucket list within HashSet before it will be transformed to a tree?&answer=8;
+
+###
+GET http://localhost:8080/exam/java/add?question=What is Integer.MAX_VALUE equal to?&answer=2147483647;
+
+###
+GET http://localhost:8080/exam/java
+
+###
+GET http://localhost:8080/exam/java/remove?question=What is Integer.MAX_VALUE equal to?&answer=2147483647;

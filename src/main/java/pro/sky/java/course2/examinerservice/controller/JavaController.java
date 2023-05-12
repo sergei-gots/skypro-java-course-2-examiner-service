@@ -23,11 +23,6 @@ public class JavaController {
         return questionService.add(question, answer);
     }
 
-    @GetMapping("/find")
-    public Question findQuestion(String question, String answer) {
-        return questionService.get(new Question(question, answer));
-    }
-
     @GetMapping("")
     Collection<Question> getQuestions() {
         return questionService.getAll();
