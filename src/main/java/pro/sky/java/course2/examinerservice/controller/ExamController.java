@@ -18,9 +18,14 @@ public class ExamController {
         this.examinerService = examinerService;
     }
 
-    @GetMapping("/{amount}")
-    public Collection<Question> getRandomCollectionOfQuestions(@PathVariable("amount") Integer amount) {
-        return examinerService.getQuestions(amount);
+    @GetMapping("/java/{amount}")
+    public Collection<Question> getRandomJavaQuestions(@PathVariable("amount") Integer amount) {
+        return examinerService.getQuestions(Question.Exam.JAVA, amount);
+    }
+
+    @GetMapping("/math/{amount}")
+    public Collection<Question> getRandomMathQuestions(@PathVariable("amount") Integer amount) {
+        return examinerService.getQuestions(Question.Exam.MATH, amount);
     }
 
     @ExceptionHandler(value = AmountIsGreaterThanTotalQuestionsCountException.class)

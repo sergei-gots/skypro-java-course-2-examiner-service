@@ -5,5 +5,5 @@ import pro.sky.java.course2.examinerservice.domain.Question;
 import java.util.Collection;
 
 public interface ExaminerService {
-    Collection<Question> getQuestions(int amount);
+    Collection<Question> getQuestions(Question.Exam exam, int amount);
 }

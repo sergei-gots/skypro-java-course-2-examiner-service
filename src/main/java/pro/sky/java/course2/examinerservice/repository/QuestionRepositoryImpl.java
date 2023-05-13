@@ -1,8 +1,10 @@
 package pro.sky.java.course2.examinerservice.repository;
 
-import development.QuestionUtils;
+import developer_tools.QuestionUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import pro.sky.java.course2.examinerservice.domain.Question;
+import pro.sky.java.course2.examinerservice.domain.Question.Exam;
 import pro.sky.java.course2.examinerservice.exception.NoSuchQuestionException;
 
 import java.util.Collection;
@@ -11,15 +13,23 @@ import java.util.List;
 
 
 @Repository
+@Scope("prototype")
 public class QuestionRepositoryImpl implements QuestionRepository {
+    private Exam exam;
 
     private HashMap<String, Question> questions;
 
-    public QuestionRepositoryImpl() { init(); }
+    public QuestionRepositoryImpl() { }
+
+    @Override
+    public void setExam(Exam exam) {
+        this.exam = exam;
+        init();
+    }
 
     //@PostConstruct
     private void init() {
-        questions = new HashMap<>(QuestionUtils.initQuestions());
+        questions = new HashMap<>(QuestionUtils.initQuestions(exam));
     }
 
 

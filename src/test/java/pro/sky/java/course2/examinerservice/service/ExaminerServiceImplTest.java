@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.when;
 import pro.sky.java.course2.examinerservice.domain.Question;
+import pro.sky.java.course2.examinerservice.domain.Question.Exam;
 
 
 import java.util.Random;
@@ -33,22 +34,22 @@ class ExaminerServiceImplTest {
 
     public Stream<Arguments> getQuestionsParamTest() {
         return Stream.of(
-                Arguments.of(1),
-                Arguments.of(2),
-                Arguments.of(3),
-                Arguments.of(4),
-                Arguments.of(5),
-                Arguments.of(6),
-                Arguments.of(7),
-                Arguments.of(8),
-                Arguments.of(9),
-                Arguments.of(10)
+                Arguments.of(Exam.JAVA, 1),
+                Arguments.of(Exam.JAVA, 2),
+                Arguments.of(Exam.JAVA, 3),
+                Arguments.of(Exam.JAVA, 4),
+                Arguments.of(Exam.JAVA, 5),
+                Arguments.of(Exam.MATH, 6),
+                Arguments.of(Exam.MATH, 5),
+                Arguments.of(Exam.MATH, 8),
+                Arguments.of(Exam.MATH, 9),
+                Arguments.of(Exam.MATH, 10)
                 );
     }
 
     @ParameterizedTest
     @MethodSource("getQuestionsParamTest")
-    void getQuestionsTest(int amount) {
+    void getQuestionsTest(Exam exam, int amount) {
         when(questionService.count())
                 .thenReturn(10);
 
@@ -56,7 +57,7 @@ class ExaminerServiceImplTest {
                 .thenReturn(questions[random.nextInt(10)]);
 
 
-        Collection<Question> questionCollection = examinerService.getQuestions(amount);
+        Collection<Question> questionCollection = examinerService.getQuestions(exam, amount);
         assertThat(questionCollection.size()).isEqualTo(amount);
         assertThat(questionCollection.stream().distinct().count()).isEqualTo(amount);
     }

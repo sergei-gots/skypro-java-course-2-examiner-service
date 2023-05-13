@@ -3,6 +3,11 @@ package pro.sky.java.course2.examinerservice.domain;
 import java.util.Objects;
 
 public class Question {
+    public enum Exam {
+        UNDEFINED,
+        MATH,
+        JAVA
+    }
     private final String question;
     private final String answer;
 

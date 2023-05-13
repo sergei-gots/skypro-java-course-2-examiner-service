@@ -1,13 +1,58 @@
-package development;
+package developer_tools;
 
 import pro.sky.java.course2.examinerservice.domain.Question;
+import pro.sky.java.course2.examinerservice.domain.Question.Exam;
+
 
 import java.util.Map;
 
 public class QuestionUtils {
 
-    public static Map<String, Question> initQuestions() {
+    public static Map<String, Question> initQuestions(Exam exam) {
+        if (exam == Exam.JAVA) {
+            return initJavaQuestions();
+        }
+        if (exam == Exam.MATH) {
+            return initMathQuestions();
+        }
+        return Map.of();
+    }
 
+    public static Map<String, Question> initMathQuestions() {
+        String stringQuestion;
+        return Map.of(
+                stringQuestion = "2x2",
+                new Question(stringQuestion, "4"),
+
+                stringQuestion = "Pi",
+                new Question(stringQuestion, "3.14"),
+
+                stringQuestion = "e",
+                new Question(stringQuestion, "2.72"),
+
+                stringQuestion = "1-1",
+                new Question(stringQuestion, "0"),
+
+                stringQuestion = "5x5",
+                new Question(stringQuestion, "25"),
+
+                stringQuestion = "Sin(pi)",
+                new Question(stringQuestion, "0"),
+
+                stringQuestion = "Cos(pi)",
+                new Question(stringQuestion, "1"),
+
+                stringQuestion = "7x7",
+                new Question(stringQuestion, "49"),
+
+                stringQuestion = "3^6",
+                new Question(stringQuestion, "729"),
+
+                stringQuestion = "5^5",
+                new Question(stringQuestion, "3125")
+                );
+    }
+    public static Map<String, Question> initJavaQuestions() {
         String stringQuestion;
         return Map.of(
                 stringQuestion = "How do you reverse a string in Java?",

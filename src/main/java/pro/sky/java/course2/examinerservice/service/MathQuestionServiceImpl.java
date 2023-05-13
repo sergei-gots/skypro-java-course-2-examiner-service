@@ -10,15 +10,15 @@ import java.util.Collection;
 import java.util.Random;
 
 @Service
-@Component("JavaQuestionService")
-public class JavaQuestionServiceImpl implements QuestionService {
+@Component("MathQuestionService")
+public class MathQuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
     private final Random random = new Random();
 
-    public JavaQuestionServiceImpl(QuestionRepository questionRepository) {
+    public MathQuestionServiceImpl(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
-        questionRepository.setExam(Exam.JAVA);
+        questionRepository.setExam(Exam.MATH);
     }
 
     @Override
