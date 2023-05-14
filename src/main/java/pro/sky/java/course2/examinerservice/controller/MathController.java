@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.java.course2.examinerservice.domain.Question;
-import pro.sky.java.course2.examinerservice.exception.NoSuchQuestionException;
+import pro.sky.java.course2.examinerservice.exception.QuestionNotFoundException;
 import pro.sky.java.course2.examinerservice.exception.QuestionException;
 import pro.sky.java.course2.examinerservice.service.QuestionService;
 
 import java.util.Collection;
 
 @RestController
-@RequestMapping("exam/math")
+@RequestMapping("/math")
 public class MathController {
     final private QuestionService questionService;
 
@@ -37,7 +37,7 @@ public class MathController {
         return questionService.remove(new Question(question, null));
     }
 
-    @ExceptionHandler(value = NoSuchQuestionException.class)
+    @ExceptionHandler(value = QuestionNotFoundException.class)
     public ResponseEntity<String> handleBadRequest(QuestionException e) {
         return e.getResponseStatus();
     }

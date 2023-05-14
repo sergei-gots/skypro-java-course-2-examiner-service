@@ -1,4 +1,4 @@
-package pro.sky.java.course2.examinerservice.service;
+package pro.sky.java.course2.examinerservice.service.impl;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.when;
 import pro.sky.java.course2.examinerservice.domain.Question;
-import pro.sky.java.course2.examinerservice.domain.Question.Exam;
+import pro.sky.java.course2.examinerservice.service.QuestionService;
 
 
 import java.util.Random;
@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 class ExaminerServiceImplTest {
 
     @Mock
-    private QuestionService questionService;
+    private QuestionService javaQuestionService;
 
     @InjectMocks
     private ExaminerServiceImpl examinerService;
@@ -34,30 +34,30 @@ class ExaminerServiceImplTest {
 
     public Stream<Arguments> getQuestionsParamTest() {
         return Stream.of(
-                Arguments.of(Exam.JAVA, 1),
-                Arguments.of(Exam.JAVA, 2),
-                Arguments.of(Exam.JAVA, 3),
-                Arguments.of(Exam.JAVA, 4),
-                Arguments.of(Exam.JAVA, 5),
-                Arguments.of(Exam.MATH, 6),
-                Arguments.of(Exam.MATH, 5),
-                Arguments.of(Exam.MATH, 8),
-                Arguments.of(Exam.MATH, 9),
-                Arguments.of(Exam.MATH, 10)
+                Arguments.of(javaQuestionService, 1),
+                Arguments.of(javaQuestionService, 2),
+                Arguments.of(javaQuestionService, 3),
+                Arguments.of(javaQuestionService, 4),
+                Arguments.of(javaQuestionService, 5),
+                Arguments.of(javaQuestionService, 6),
+                Arguments.of(javaQuestionService, 5),
+                Arguments.of(javaQuestionService, 8),
+                Arguments.of(javaQuestionService, 9),
+                Arguments.of(javaQuestionService, 10)
                 );
     }
 
     @ParameterizedTest
     @MethodSource("getQuestionsParamTest")
-    void getQuestionsTest(Exam exam, int amount) {
-        when(questionService.count())
+    void getQuestionsTest(QuestionService questionSErvice, int amount) {
+        when(javaQuestionService.size())
                 .thenReturn(10);
 
-        when(questionService.getRandomQuestion())
+        when(javaQuestionService.getRandomQuestion())
                 .thenReturn(questions[random.nextInt(10)]);
 
 
-        Collection<Question> questionCollection = examinerService.getQuestions(exam, amount);
+        Collection<Question> questionCollection = examinerService.getQuestions(javaQuestionService, amount);
         assertThat(questionCollection.size()).isEqualTo(amount);
         assertThat(questionCollection.stream().distinct().count()).isEqualTo(amount);
     }

@@ -36,6 +36,8 @@ GET http://localhost:8080/exam/java/add?question=What is Integer.MAX_VALUE equal
 ###
 GET http://localhost:8080/exam/java
 ###
+GET http://localhost:8080/exam/java/get?question=What is Integer.MAX_VALUE equal to?
+###
 GET http://localhost:8080/exam/java/remove?question=What is Integer.MAX_VALUE equal to?
 
 ###

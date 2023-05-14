@@ -1,24 +1,20 @@
-package pro.sky.java.course2.examinerservice.service;
+package pro.sky.java.course2.examinerservice.service.impl;
 
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import pro.sky.java.course2.examinerservice.domain.Question;
-import pro.sky.java.course2.examinerservice.domain.Question.Exam;
 import pro.sky.java.course2.examinerservice.repository.QuestionRepository;
+import pro.sky.java.course2.examinerservice.service.QuestionService;
 
 import java.util.Collection;
 import java.util.Random;
 
-@Service
-@Component("JavaQuestionService")
-public class JavaQuestionServiceImpl implements QuestionService {
+
+abstract public class AbstractQuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
     private final Random random = new Random();
 
-    public JavaQuestionServiceImpl(QuestionRepository questionRepository) {
+    public AbstractQuestionServiceImpl(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
-        questionRepository.setExam(Exam.JAVA);
     }
 
     @Override
@@ -28,7 +24,6 @@ public class JavaQuestionServiceImpl implements QuestionService {
 
     @Override
     public Question add(Question question) {
-
         return questionRepository.add(question);
     }
 
@@ -53,11 +48,11 @@ public class JavaQuestionServiceImpl implements QuestionService {
     @Override
     public Question getRandomQuestion() {
 
-        return questionRepository.get(random.nextInt(questionRepository.count()));
+        return questionRepository.get(random.nextInt(questionRepository.size()));
     }
 
     @Override
-    public int count() {
-        return questionRepository.count();
+    public int size() {
+        return questionRepository.size();
     }
 }

@@ -2,13 +2,10 @@ package pro.sky.java.course2.examinerservice.repository;
 
 
 import pro.sky.java.course2.examinerservice.domain.Question;
-import pro.sky.java.course2.examinerservice.domain.Question.Exam;
 
 import java.util.Collection;
 
 public interface QuestionRepository {
-
-    void setExam(Exam exam);
 
     Question add(Question question);
 
@@ -22,5 +19,5 @@ public interface QuestionRepository {
 
     Collection<Question> removeAll();
 
-    int count();
+    int size();
 }

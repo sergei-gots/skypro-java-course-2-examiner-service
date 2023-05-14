@@ -3,12 +3,10 @@ package pro.sky.java.course2.examinerservice.domain;
 import java.util.Objects;
 
 public class Question {
-    public enum Exam {
-        UNDEFINED,
-        MATH,
-        JAVA
-    }
+
+    /** this field is key, i.e. the only field used within equeals&hashCode contract **/
     private final String question;
+    /** this field is not in equals&hashCode contract **/
     private final String answer;
 
     public Question(String question, String answer) {
@@ -29,12 +27,12 @@ public class Question {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question1 = (Question) o;
-        return question.equals(question1.question) && answer.equals(question1.answer);
+        return question.equals(question1.question);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(question, answer);
+        return Objects.hash(question);
     }
 
     @Override

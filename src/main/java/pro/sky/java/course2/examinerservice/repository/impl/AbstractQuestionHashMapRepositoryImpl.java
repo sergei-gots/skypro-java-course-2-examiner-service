@@ -1,37 +1,27 @@
-package pro.sky.java.course2.examinerservice.repository;
+package pro.sky.java.course2.examinerservice.repository.impl;
 
-import developer_tools.QuestionUtils;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Repository;
 import pro.sky.java.course2.examinerservice.domain.Question;
-import pro.sky.java.course2.examinerservice.domain.Question.Exam;
-import pro.sky.java.course2.examinerservice.exception.NoSuchQuestionException;
+import pro.sky.java.course2.examinerservice.exception.QuestionNotFoundException;
+import pro.sky.java.course2.examinerservice.repository.QuestionRepository;
 
+import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 
-@Repository
-@Scope("prototype")
-public class QuestionRepositoryImpl implements QuestionRepository {
-    private Exam exam;
-
+@Deprecated
+abstract public class AbstractQuestionHashMapRepositoryImpl implements QuestionRepository {
     private HashMap<String, Question> questions;
 
-    public QuestionRepositoryImpl() { }
+    /** Should invoke method setQuestions
+     */
+    @PostConstruct
+    abstract protected void initQuestions();
 
-    @Override
-    public void setExam(Exam exam) {
-        this.exam = exam;
-        init();
+    protected void setQuestions(HashMap<String, Question> questions) {
+        this.questions = questions;
     }
-
-    //@PostConstruct
-    private void init() {
-        questions = new HashMap<>(QuestionUtils.initQuestions(exam));
-    }
-
 
     @Override
     public Question add(Question question) {
@@ -47,7 +37,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
         String  strQuestion = question.getQuestion();
         if (!questions.containsKey(strQuestion)) {
-            throw new NoSuchQuestionException(strQuestion);
+            throw new QuestionNotFoundException(question);
         }
         return questions.remove(strQuestion);
     }
@@ -56,7 +46,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     public Question get(Question question) {
         String  strQuestion = question.getQuestion();
         if (!questions.containsKey(strQuestion)) {
-            throw new NoSuchQuestionException(strQuestion);
+            throw new QuestionNotFoundException(question);
         }
         return questions.get(strQuestion);
     }
@@ -79,7 +69,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public int count() {
+    public int size() {
         return questions.size();
     }
 }

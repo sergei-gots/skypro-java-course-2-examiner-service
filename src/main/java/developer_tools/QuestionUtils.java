@@ -1,62 +1,31 @@
 package developer_tools;
 
 import pro.sky.java.course2.examinerservice.domain.Question;
-import pro.sky.java.course2.examinerservice.domain.Question.Exam;
 
 
-import java.util.Map;
+import java.util.Collection;
+import java.util.List;
 
 public class QuestionUtils {
 
-    public static Map<String, Question> initQuestions(Exam exam) {
-        if (exam == Exam.JAVA) {
-            return initJavaQuestions();
-        }
-        if (exam == Exam.MATH) {
-            return initMathQuestions();
-        }
-        return Map.of();
-    }
-
-    public static Map<String, Question> initMathQuestions() {
-        String stringQuestion;
-        return Map.of(
-                stringQuestion = "2x2",
-                new Question(stringQuestion, "4"),
-
-                stringQuestion = "Pi",
-                new Question(stringQuestion, "3.14"),
-
-                stringQuestion = "e",
-                new Question(stringQuestion, "2.72"),
-
-                stringQuestion = "1-1",
-                new Question(stringQuestion, "0"),
-
-                stringQuestion = "5x5",
-                new Question(stringQuestion, "25"),
-
-                stringQuestion = "Sin(pi)",
-                new Question(stringQuestion, "0"),
-
-                stringQuestion = "Cos(pi)",
-                new Question(stringQuestion, "1"),
-
-                stringQuestion = "7x7",
-                new Question(stringQuestion, "49"),
-
-                stringQuestion = "3^6",
-                new Question(stringQuestion, "729"),
-
-                stringQuestion = "5^5",
-                new Question(stringQuestion, "3125")
+    public static Collection<Question> initMathQuestions() {
+        return List.of(
+                new Question("2x2", "4"),
+                new Question("Pi", "3.14"),
+                new Question("e", "2.72"),
+                new Question("1-1", "0"),
+                new Question("5x5", "25"),
+                new Question("Sin(pi)", "0"),
+                new Question("Cos(pi)", "1"),
+                new Question("7x7", "49"),
+                new Question("3^6", "729"),
+                new Question("5^5", "3125")
                 );
     }
-    public static Map<String, Question> initJavaQuestions() {
+    public static Collection<Question> initJavaQuestions() {
         String stringQuestion;
-        return Map.of(
-                stringQuestion = "How do you reverse a string in Java?",
-                new Question(stringQuestion,
+        return List.of(
+                new Question("How do you reverse a string in Java?",
                         "public class StringPrograms {\n" +
                                 "\n" +
                                 "\tpublic static void main(String[] args) {\n" +
@@ -81,13 +50,11 @@ public class QuestionUtils {
                                 "\n" +
                                 "}"),
 
-                stringQuestion = "How do you swap two numbers without using a third variable in Java?",
-                new Question(stringQuestion,
+                new Question("How do you swap two numbers without using a third variable in Java?",
                         "b = b + a; // now b is sum of both the numbers\n" +
                                 "a = b - a; // b - a = (b + a) - a = b (a is swapped)\n" +
                                 "b = b - a; // (b + a) - b = a (b is swapped)"),
-                stringQuestion = "Write a Java program to check if a vowel is present in a string.",
-                new Question(stringQuestion,
+                new Question("Write a Java program to check if a vowel is present in a string.",
                         "public class StringContainsVowels {\n" +
                                 "\n" +
                                 "\tpublic static void main(String[] args) {\n" +
@@ -100,8 +67,7 @@ public class QuestionUtils {
                                 "\t}\n" +
                                 "\n" +
                                 "}"),
-                stringQuestion = "Write a Java program to check if the given number is a prime number.",
-                new Question(stringQuestion,
+                new Question("Write a Java program to check if the given number is a prime number.",
                         "public class PrimeNumberCheck {\n" +
                                 "\n" +
                                 "\tpublic static void main(String[] args) {\n" +
@@ -126,8 +92,7 @@ public class QuestionUtils {
                                 "\t}\n" +
                                 "\n" +
                                 "}"),
-                stringQuestion = "Write a Java program to print a Fibonacci sequence using recursion.",
-                new Question(stringQuestion,
+                new Question("Write a Java program to print a Fibonacci sequence using recursion.",
                         "public class PrintFibonacci {\n" +
                                 "\n" +
                                 "\tpublic static void printFibonacciSequence(int count) {\n" +
@@ -149,8 +114,7 @@ public class QuestionUtils {
                                 "\t}\n" +
                                 "\n" +
                                 "}"),
-                stringQuestion = "How do you check if a list of integers contains only odd numbers in Java?",
-                new Question(stringQuestion,
+                new Question("How do you check if a list of integers contains only odd numbers in Java?",
                         "public static boolean onlyOddNumbers(List<Integer> list) {\n" +
                                 "\tfor (int i : list) {\n" +
                                 "\t\tif (i % 2 == 0)\n" +
@@ -159,8 +123,7 @@ public class QuestionUtils {
                                 "\n" +
                                 "\treturn true;\n" +
                                 "}"),
-                stringQuestion = "How do you check whether a string is a palindrome in Java?",
-                new Question(stringQuestion,
+                new Question("How do you check whether a string is a palindrome in Java?",
                         "boolean checkPalindromeString(String input) {\n" +
                                 "\tboolean result = true;\n" +
                                 "\tint length = input.length();\n" +
@@ -174,8 +137,7 @@ public class QuestionUtils {
                                 "\n" +
                                 "\treturn result;\n" +
                                 "}"),
-                stringQuestion = "How do you remove spaces from a string in Java?",
-                new Question(stringQuestion,
+                new Question("How do you remove spaces from a string in Java?",
                         "String removeWhiteSpaces(String input) {\n" +
                                 "\tStringBuilder output = new StringBuilder();\n" +
                                 "\t\n" +
@@ -188,18 +150,14 @@ public class QuestionUtils {
                                 "\t\n" +
                                 "\treturn output.toString();\n" +
                                 "}"),
-                stringQuestion = "How do you remove leading and trailing spaces from a string in Java?",
-                new Question(stringQuestion,
+                new Question("How do you remove leading and trailing spaces from a string in Java?",
                         "String s = \"  abc  def\\t\";\n" +
                                 "\t\t\n" +
                                 "s = s.strip();\n" +
                                 "\t\t\n" +
                                 "System.out.println(s);"),
-                stringQuestion = "How do you sort an array in Java?",
-                new Question(stringQuestion,
+                new Question("How do you sort an array in Java?",
                         "Arrays.sort(array);")
-
-
         );
     }
 }
