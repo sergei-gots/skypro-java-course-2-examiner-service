@@ -24,6 +24,7 @@ abstract public class AbstractQuestionServiceImpl implements QuestionService {
 
     @Override
     public Question add(Question question) {
+
         return questionRepository.add(question);
     }
 

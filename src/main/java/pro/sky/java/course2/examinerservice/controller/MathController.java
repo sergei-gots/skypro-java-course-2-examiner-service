@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.sky.java.course2.examinerservice.domain.Question;
 import pro.sky.java.course2.examinerservice.exception.QuestionNotFoundException;
 import pro.sky.java.course2.examinerservice.exception.QuestionException;
+import pro.sky.java.course2.examinerservice.exception.QuestionsRepositoryIsNotModifiableException;
 import pro.sky.java.course2.examinerservice.service.QuestionService;
 
 import java.util.Collection;
@@ -37,7 +38,11 @@ public class MathController {
         return questionService.remove(new Question(question, null));
     }
 
-    @ExceptionHandler(value = QuestionNotFoundException.class)
+    @ExceptionHandler(value = {
+            QuestionNotFoundException.class,
+            QuestionsRepositoryIsNotModifiableException.class
+        }
+    )
     public ResponseEntity<String> handleBadRequest(QuestionException e) {
         return e.getResponseStatus();
     }

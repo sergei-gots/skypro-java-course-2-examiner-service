@@ -2,6 +2,7 @@ package pro.sky.java.course2.examinerservice.repository.impl;
 
 import pro.sky.java.course2.examinerservice.domain.Question;
 import pro.sky.java.course2.examinerservice.exception.QuestionNotFoundException;
+import pro.sky.java.course2.examinerservice.exception.QuestionsRepositoryIsNotModifiableException;
 import pro.sky.java.course2.examinerservice.repository.QuestionRepository;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +11,8 @@ import java.util.*;
 
 abstract public class AbstractQuestionRepositoryImpl implements QuestionRepository {
     private Set<Question> questions = new HashSet<>();
+
+    private boolean isModifiable = true;
 
     /** Should invoke method setQuestions
      */
@@ -21,14 +24,29 @@ abstract public class AbstractQuestionRepositoryImpl implements QuestionReposito
     }
 
     @Override
+    public void disableEdit() {
+        isModifiable = false;
+    }
+
+    private void validateIfItIsModifiable() {
+        if(!isModifiable) {
+            throw new QuestionsRepositoryIsNotModifiableException(this);
+        }
+    }
+
+    @Override
     public Question add(Question question) {
+        validateIfItIsModifiable();
         questions.remove(question);
         questions.add(question);
         return question;
     }
 
+
+
     @Override
     public Question remove(Question question) {
+        validateIfItIsModifiable();
         questions.remove(question = get(question));
         return question;
     }
@@ -62,6 +80,7 @@ abstract public class AbstractQuestionRepositoryImpl implements QuestionReposito
 
     @Override
     public Collection<Question> removeAll() {
+        validateIfItIsModifiable();
         Collection<Question> collection = getAll();
         questions.clear();
         return collection;

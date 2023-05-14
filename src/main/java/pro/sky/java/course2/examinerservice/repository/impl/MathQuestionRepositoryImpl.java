@@ -16,5 +16,6 @@ public class MathQuestionRepositoryImpl extends AbstractQuestionRepositoryImpl {
     @PostConstruct
     protected void initQuestions() {
         setQuestions(new HashSet<>(QuestionUtils.initMathQuestions()));
+        disableEdit();
     }
 }
