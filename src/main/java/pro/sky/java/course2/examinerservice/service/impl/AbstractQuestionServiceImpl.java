@@ -52,7 +52,7 @@ abstract public class AbstractQuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public int size() {
+    public int questionsCount() {
         return questionRepository.size();
     }
 }

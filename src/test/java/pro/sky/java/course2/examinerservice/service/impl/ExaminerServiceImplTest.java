@@ -50,7 +50,7 @@ class ExaminerServiceImplTest {
     @ParameterizedTest
     @MethodSource("getQuestionsParamTest")
     void getQuestionsTest(QuestionService questionSErvice, int amount) {
-        when(javaQuestionService.size())
+        when(javaQuestionService.questionsCount())
                 .thenReturn(10);
 
         when(javaQuestionService.getRandomQuestion())

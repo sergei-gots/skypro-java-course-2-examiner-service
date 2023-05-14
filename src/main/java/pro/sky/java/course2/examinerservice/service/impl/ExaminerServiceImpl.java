@@ -14,7 +14,7 @@ public class ExaminerServiceImpl implements ExaminerService {
 
     @Override
     public Collection<Question> getQuestions(QuestionService questionService, int amount) {
-        final int totalAmount = questionService.size();
+        final int totalAmount = questionService.questionsCount();
         if(amount > totalAmount) {
             throw new IncorrectQuestionsAmountException(totalAmount, amount);
         }
