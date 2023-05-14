@@ -6,8 +6,8 @@ import pro.sky.java.course2.examinerservice.exception.IncorrectQuestionsAmountEx
 import pro.sky.java.course2.examinerservice.service.ExaminerService;
 import pro.sky.java.course2.examinerservice.service.QuestionService;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
@@ -15,17 +15,12 @@ public class ExaminerServiceImpl implements ExaminerService {
     @Override
     public Collection<Question> getQuestions(QuestionService questionService, int amount) {
         final int totalAmount = questionService.questionsCount();
-        if(amount > totalAmount) {
+        if(amount <0 || amount > totalAmount) {
             throw new IncorrectQuestionsAmountException(totalAmount, amount);
         }
-        Collection<Question> collection = new ArrayList<>(amount);
-        Question question;
-        for (int i = 0; i < amount; i++) {
-            do {
-                question = questionService.getRandomQuestion();
-            } while (collection.contains(question));
-            collection.add(question);
-
+        Collection<Question> collection = new HashSet<>(amount);
+        while(collection.size() < amount) {
+            collection.add(questionService.getRandomQuestion());
         }
         return collection;
     }

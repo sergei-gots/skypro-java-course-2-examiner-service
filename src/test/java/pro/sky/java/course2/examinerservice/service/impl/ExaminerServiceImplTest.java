@@ -1,77 +1,80 @@
 package pro.sky.java.course2.examinerservice.service.impl;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.Mockito.when;
 import pro.sky.java.course2.examinerservice.domain.Question;
+import pro.sky.java.course2.examinerservice.exception.IncorrectQuestionsAmountException;
 import pro.sky.java.course2.examinerservice.service.QuestionService;
 
-
-import java.util.Random;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Stream;
+import java.util.Set;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
+import static org.mockito.Mockito.*;
 
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
 class ExaminerServiceImplTest {
 
     @Mock
-    private QuestionService javaQuestionService;
+    private QuestionService questionService;
 
     @InjectMocks
     private ExaminerServiceImpl examinerService;
 
+    private final Set<Question> questionSet = Set.of(
+            new Question("Q1", "A1"),
+            new Question("Q2", "A2"),
+            new Question("Q3", "A3"),
+            new Question("Q4", "A4"),
+            new Question("Q5", "A5"),
+            new Question("Q6", "A6"),
+            new Question("Q7", "A7"),
+            new Question("Q8", "A8"));
 
-    public Stream<Arguments> getQuestionsParamTest() {
-        return Stream.of(
-                Arguments.of(javaQuestionService, 1),
-                Arguments.of(javaQuestionService, 2),
-                Arguments.of(javaQuestionService, 3),
-                Arguments.of(javaQuestionService, 4),
-                Arguments.of(javaQuestionService, 5),
-                Arguments.of(javaQuestionService, 6),
-                Arguments.of(javaQuestionService, 5),
-                Arguments.of(javaQuestionService, 8),
-                Arguments.of(javaQuestionService, 9),
-                Arguments.of(javaQuestionService, 10)
-                );
-    }
+    @Test
+    void test_getQuestions() {
+        final int amount = 5;
+        when(questionService.questionsCount()).thenReturn(questionSet.size());
+        when(questionService.getRandomQuestion()).thenReturn(new Question("Q1", "A1"),   //1
+                new Question("Q1", "A1"),   //2
+                new Question("Q2", "A1"),   //3
+                new Question("Q3", "A1"),   //4
+                new Question("Q2", "A1"),   //5
+                new Question("Q3", "A1"),   //6
+                new Question("Q4", "A1"),   //7
+                new Question("Q4", "A1"),   //8
+                new Question("Q3", "A1"),   //8
+                new Question("Q5", "A5"),    //10
+                new Question("Q5", "A5"),
+                new Question("Q6", "A6"));
 
-    @ParameterizedTest
-    @MethodSource("getQuestionsParamTest")
-    void getQuestionsTest(QuestionService questionSErvice, int amount) {
-        when(javaQuestionService.questionsCount())
-                .thenReturn(10);
-
-        when(javaQuestionService.getRandomQuestion())
-                .thenReturn(questions[random.nextInt(10)]);
-
-
-        Collection<Question> questionCollection = examinerService.getQuestions(javaQuestionService, amount);
+        Collection<Question> questionCollection =
+                examinerService.getQuestions(questionService, amount);
         assertThat(questionCollection.size()).isEqualTo(amount);
         assertThat(questionCollection.stream().distinct().count()).isEqualTo(amount);
+        assertThat(new ArrayList<>(questionCollection)).usingRecursiveComparison().asList().containsExactlyInAnyOrder(new Question("Q1", "A1"), new Question("Q2", "A1"), new Question("Q3", "A1"), new Question("Q4", "A1"), new Question("Q5", "A5"));
+        verify(questionService, times(10)).getRandomQuestion();
+
     }
 
-
-    private Question[] questions;
-    final private Random random = new Random();
-
-    @BeforeAll
-    public void beforeAll() {
-        questions = new Question[10];
-        for (int i = 0; i < 10 ; i++) {
-            questions[i] = new Question("Q" + i, "A" + i);
-        }
+    @Test
+    public void test_getQuestions_when_negativeAmount() {
+        assertThatExceptionOfType(IncorrectQuestionsAmountException.class)
+                .isThrownBy(() -> examinerService.getQuestions(questionService, -1));
     }
 
+    @Test
+    public void test_getQuestions_when_amountIsTooGreat() {
+        //GIVEN
+        when(questionService.questionsCount()).thenReturn(questionSet.size());
+        //THEN
+        assertThatExceptionOfType(IncorrectQuestionsAmountException.class)
+                .isThrownBy(() -> examinerService.getQuestions(questionService, questionSet.size() + 1));
+    }
 }
