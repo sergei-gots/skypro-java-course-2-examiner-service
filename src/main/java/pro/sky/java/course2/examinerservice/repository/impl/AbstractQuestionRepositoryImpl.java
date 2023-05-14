@@ -9,7 +9,7 @@ import java.util.*;
 
 
 abstract public class AbstractQuestionRepositoryImpl implements QuestionRepository {
-    private Set<Question> questions;
+    private Set<Question> questions = new HashSet<>();
 
     /** Should invoke method setQuestions
      */
@@ -22,9 +22,7 @@ abstract public class AbstractQuestionRepositoryImpl implements QuestionReposito
 
     @Override
     public Question add(Question question) {
-        if(questions == null) {
-            questions = new HashSet<>();
-        }
+        questions.remove(question);
         questions.add(question);
         return question;
     }
@@ -42,6 +40,12 @@ abstract public class AbstractQuestionRepositoryImpl implements QuestionReposito
                 .findFirst()
                 .orElseThrow(()->new QuestionNotFoundException(question));
     }
+
+    @Override
+    public Question get(String question) {
+        return get(new Question(question, null));
+    }
+
 
     @Override
     public Question get(int index) {

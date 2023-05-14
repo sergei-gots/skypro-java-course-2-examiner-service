@@ -13,6 +13,8 @@ public interface QuestionRepository {
 
     Question get(Question question);
 
+    Question get(String question);
+
     Question get(int index);
 
     Collection<Question> getAll();

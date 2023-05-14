@@ -34,6 +34,12 @@ abstract public class AbstractQuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public Question get(String question) {
+
+        return questionRepository.get(new Question(question, null));
+    }
+
+    @Override
     public Question remove(Question question) {
 
         return questionRepository.remove(question);

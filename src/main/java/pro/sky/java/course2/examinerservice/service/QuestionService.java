@@ -11,6 +11,8 @@ public interface QuestionService {
 
     Question get(Question question);
 
+    Question get(String question);
+
     Question remove(Question question);
 
     Collection<Question> getAll();
