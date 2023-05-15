@@ -1,6 +1,6 @@
 package pro.sky.java.course2.examinerservice.repository.impl;
 
-import developer_tools.QuestionUtils;
+import developer.util.QuestionUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 

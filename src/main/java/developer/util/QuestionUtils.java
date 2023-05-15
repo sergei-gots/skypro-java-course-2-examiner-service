@@ -1,4 +1,4 @@
-package developer_tools;
+package developer.util;
 
 import pro.sky.java.course2.examinerservice.domain.Question;
 
