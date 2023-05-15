@@ -28,7 +28,7 @@ public class MathController {
         return questionService.add(question, answer);
     }
 
-    @GetMapping("")
+    @GetMapping()
     Collection<Question> getQuestions() {
         return questionService.getAll();
     }

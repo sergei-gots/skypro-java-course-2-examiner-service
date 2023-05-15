@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Qualifier;
 import pro.sky.java.course2.examinerservice.domain.Question;
 import pro.sky.java.course2.examinerservice.exception.IncorrectQuestionsAmountException;
 import pro.sky.java.course2.examinerservice.service.QuestionService;
@@ -22,12 +23,17 @@ import static org.mockito.Mockito.*;
 class ExaminerServiceImplTest {
 
     @Mock
-    private QuestionService questionService;
+    @Qualifier("JavaQuestionService")
+    private QuestionService javaQuestionService;
+
+    @Mock
+    @Qualifier("MathQuestionService")
+    private QuestionService mathQuestionService;
 
     @InjectMocks
     private ExaminerServiceImpl examinerService;
 
-    private final Set<Question> questionSet = Set.of(
+    private final Set<Question> testQuestionsSet = Set.of(
             new Question("Q1", "A1"),
             new Question("Q2", "A2"),
             new Question("Q3", "A3"),
@@ -38,10 +44,10 @@ class ExaminerServiceImplTest {
             new Question("Q8", "A8"));
 
     @Test
-    void test_getQuestions() {
+    void test_getJavaQuestions() {
         final int amount = 5;
-        when(questionService.questionsCount()).thenReturn(questionSet.size());
-        when(questionService.getRandomQuestion()).thenReturn(new Question("Q1", "A1"),   //1
+        when(javaQuestionService.questionsCount()).thenReturn(testQuestionsSet.size());
+        when(javaQuestionService.getRandomQuestion()).thenReturn(new Question("Q1", "A1"),   //1
                 new Question("Q1", "A1"),   //2
                 new Question("Q2", "A1"),   //3
                 new Question("Q3", "A1"),   //4
@@ -55,26 +61,67 @@ class ExaminerServiceImplTest {
                 new Question("Q6", "A6"));
 
         Collection<Question> questionCollection =
-                examinerService.getQuestions(questionService, amount);
+                examinerService.getJavaQuestions(amount);
         assertThat(questionCollection.size()).isEqualTo(amount);
         assertThat(questionCollection.stream().distinct().count()).isEqualTo(amount);
         assertThat(new ArrayList<>(questionCollection)).usingRecursiveComparison().asList().containsExactlyInAnyOrder(new Question("Q1", "A1"), new Question("Q2", "A1"), new Question("Q3", "A1"), new Question("Q4", "A1"), new Question("Q5", "A5"));
-        verify(questionService, times(10)).getRandomQuestion();
+        verify(javaQuestionService, times(10)).getRandomQuestion();
 
     }
 
     @Test
-    public void test_getQuestions_when_negativeAmount() {
+    public void test_getJavaQuestions_when_negativeAmount() {
         assertThatExceptionOfType(IncorrectQuestionsAmountException.class)
-                .isThrownBy(() -> examinerService.getQuestions(questionService, -1));
+                .isThrownBy(() -> examinerService.getJavaQuestions(-1));
     }
 
     @Test
-    public void test_getQuestions_when_amountIsTooGreat() {
+    public void test_getJavaQuestions_when_amountIsTooGreat() {
         //GIVEN
-        when(questionService.questionsCount()).thenReturn(questionSet.size());
+        when(javaQuestionService.questionsCount()).thenReturn(testQuestionsSet.size());
         //THEN
         assertThatExceptionOfType(IncorrectQuestionsAmountException.class)
-                .isThrownBy(() -> examinerService.getQuestions(questionService, questionSet.size() + 1));
+                .isThrownBy(() -> examinerService.getJavaQuestions(testQuestionsSet.size() + 1));
+    }
+
+    @Test
+    void test_getMathQuestions() {
+        final int amount = 5;
+        when(mathQuestionService.questionsCount()).thenReturn(testQuestionsSet.size());
+        when(mathQuestionService.getRandomQuestion()).thenReturn(new Question("Q1", "A1"),   //1
+                new Question("Q1", "A1"),   //2
+                new Question("Q2", "A1"),   //3
+                new Question("Q3", "A1"),   //4
+                new Question("Q2", "A1"),   //5
+                new Question("Q3", "A1"),   //6
+                new Question("Q4", "A1"),   //7
+                new Question("Q4", "A1"),   //8
+                new Question("Q3", "A1"),   //8
+                new Question("Q5", "A5"),    //10
+                new Question("Q5", "A5"),
+                new Question("Q6", "A6"));
+
+        Collection<Question> questionCollection =
+                examinerService.getMathQuestions(amount);
+        assertThat(questionCollection.size()).isEqualTo(amount);
+        assertThat(questionCollection.stream().distinct().count()).isEqualTo(amount);
+        assertThat(new ArrayList<>(questionCollection)).usingRecursiveComparison().asList().containsExactlyInAnyOrder(new Question("Q1", "A1"), new Question("Q2", "A1"), new Question("Q3", "A1"), new Question("Q4", "A1"), new Question("Q5", "A5"));
+        verify(mathQuestionService, times(10)).getRandomQuestion();
+
+    }
+
+    @Test
+    public void test_getMathQuestions_when_negativeAmount() {
+        assertThatExceptionOfType(IncorrectQuestionsAmountException.class)
+                .isThrownBy(() -> examinerService.getMathQuestions(-1));
+    }
+
+    @Test
+    public void test_getMathQuestions_when_amountIsTooGreat() {
+        //GIVEN
+        when(mathQuestionService.questionsCount()).thenReturn(testQuestionsSet.size());
+        //THEN
+        assertThatExceptionOfType(IncorrectQuestionsAmountException.class)
+                .isThrownBy(() -> examinerService.getMathQuestions(testQuestionsSet.size() + 1));
     }
 }

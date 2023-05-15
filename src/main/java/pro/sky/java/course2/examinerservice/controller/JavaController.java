@@ -32,7 +32,7 @@ public class JavaController {
         return questionService.get(new Question(question, null));
     }
 
-    @GetMapping("")
+    @GetMapping()
     Collection<Question> getQuestions() {
         return questionService.getAll();
     }
