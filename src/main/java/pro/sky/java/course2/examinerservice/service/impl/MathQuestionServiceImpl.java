@@ -8,6 +8,7 @@ import pro.sky.java.course2.examinerservice.repository.QuestionRepository;
 @Service
 @Component("MathQuestionService")
 public class MathQuestionServiceImpl extends AbstractQuestionServiceImpl {
+    //ToDo
     public MathQuestionServiceImpl(@Qualifier("MathQuestionRepository") QuestionRepository questionRepository) {
         super(questionRepository);
     }
