@@ -12,6 +12,7 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/get")
+
 public class ExamController {
     private final ExaminerService examinerService;
 

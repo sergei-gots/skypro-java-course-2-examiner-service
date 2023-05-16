@@ -1,13 +1,13 @@
 package pro.sky.java.course2.examinerservice.service.impl;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Qualifier;
 import pro.sky.java.course2.examinerservice.domain.Question;
 import pro.sky.java.course2.examinerservice.exception.IncorrectQuestionsAmountException;
+import pro.sky.java.course2.examinerservice.service.ExaminerService;
 import pro.sky.java.course2.examinerservice.service.QuestionService;
 
 import java.util.ArrayList;
@@ -22,16 +22,11 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ExaminerServiceImplTest {
 
-    @Mock
-    @Qualifier("JavaQuestionService")
     private QuestionService javaQuestionService;
 
-    @Mock
-    @Qualifier("MathQuestionService")
     private QuestionService mathQuestionService;
 
-    @InjectMocks
-    private ExaminerServiceImpl examinerService;
+    private ExaminerService examinerService;
 
     private final Set<Question> testQuestionsSet = Set.of(
             new Question("Q1", "A1"),
@@ -42,6 +37,13 @@ class ExaminerServiceImplTest {
             new Question("Q6", "A6"),
             new Question("Q7", "A7"),
             new Question("Q8", "A8"));
+
+    @BeforeEach
+    public void beforeEach () {
+        javaQuestionService = Mockito.mock(JavaQuestionServiceImpl.class);
+        mathQuestionService = Mockito.mock(MathQuestionServiceImpl.class);
+        examinerService = new ExaminerServiceImpl(javaQuestionService,mathQuestionService);
+    }
 
     @Test
     void test_getJavaQuestions() {
